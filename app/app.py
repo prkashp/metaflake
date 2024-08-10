@@ -3,14 +3,20 @@ import pandas as pd
 from snowflake_connector import fetch_data
 from data_processor import preprocess_data
 
-# Define your SQL query
-SQL_QUERY = "SELECT * FROM your_table LIMIT 100"
+# SQL query path
+PATH = './sql/account_usage_table.sql'
+
+def get_query(file):
+    file_dir = open(file, 'r')
+    sql_query = file_dir.read()
+    file_dir.close()
+    return sql_query
 
 def main():
     st.title("Snowflake Data Summary")
 
     # Fetch data from Snowflake
-    data = fetch_data(SQL_QUERY)
+    data = fetch_data(get_query(PATH))
 
     # Preprocess data
     processed_data = preprocess_data(data)
