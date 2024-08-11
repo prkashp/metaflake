@@ -3,13 +3,13 @@
 ## Build the Docker image:
 
 ```bash
-docker build -t metaflake
+docker build . -t metaflake/cra-docker
 ```
 
 ## Run the Docker container:
 
 ```bash
-docker run -p 8501:8501 metaflake
+docker run -p 8501:8501 metaflake/cra-docker
 ```
 
 ## Access the Streamlit app:
