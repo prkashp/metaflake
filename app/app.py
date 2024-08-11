@@ -89,11 +89,11 @@ def table_cards(df, view_details):
     <div class="meta"><i class="table icon"></i> Table Type: """+(row['TABLE_TYPE'])+"""</div>
     <div class="meta"><i class="user icon"></i> Owner: """+str(row['TABLE_OWNER'])+""" </div>
     <div class="meta"><i class="calendar alternate outline icon"></i> Created On:
-        """+str(pd.to_datetime(row['CREATED'], dayfirst=True, format='mixed'))+"""</div>
+        """+str(pd.to_datetime(row['CREATED'], dayfirst=True, format='mixed').date())+"""</div>
 </div>
 <div class="extra content" """+view_details+""">
     <div class="meta"><i class="history icon"></i> Time Travel: """+str((row['RETENTION_TIME'])).strip(".0")+"""</div>
-    <div class="meta"><i class="edit icon"></i> Last Altered: """+str(pd.to_datetime(row['LAST_ALTERED'], dayfirst=True, format='mixed'))+"""</div>
+    <div class="meta"><i class="edit icon"></i> Last Altered: """+str(pd.to_datetime(row['LAST_ALTERED'], dayfirst=True, format='mixed').date())+"""</div>
     <div class="meta"><i class="calendar times outline icon"></i> Transient: """+str(row['IS_TRANSIENT'])+""" </div>
     <div class="meta"><i class="th icon"></i> Auto Clustering: """+str(row['AUTO_CLUSTERING_ON'])+""" </div>
     <div class="meta"><i class="key icon"></i> Clustering Key: """+str(row['IS_TRANSIENT'])+""" </div>
@@ -106,7 +106,8 @@ def table_cards(df, view_details):
 
 # using dayfirst is not efficient, build process to fix data at csv source
 def main():
-    st.title("MetaFlake View")
+    # st.title("MetaFlake View")
+    st.markdown("<h1 style='text-align: center; '>MetaFlake View</h1>", unsafe_allow_html=True)
 
     css()
     # Fetch data from Snowflake
