@@ -5,7 +5,7 @@ def sidebar(df):
 
     df_reset = df
     
-    cb_view_details = st.sidebar.checkbox('View Details')
+    cb_view_details = st.sidebar.toggle('Enable Details', help='When this toggle is on it shows more details of table objects')
 
     view_details = "" if cb_view_details else """style="display: none;" """
     

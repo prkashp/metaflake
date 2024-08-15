@@ -1,49 +1,56 @@
+h1 {
+  font-size: 70px;
+  font-weight: 600;
+  background-image: conic-gradient(#553c9a, #ee4b2b, #00c2cb, #553c9a);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-align: center;
+  border-bottom: 2rem;
+}
+
 .column {
-    float: left;
-    width: 33.33%;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-
-  .kpi.number {
-    font-size: 2rem;
-    text-align: center;
-    color: rgb(90, 90, 90);
- }
-
- .kpi.text{
-    font-size: 1rem;
-    text-align: center;
-    color: rgb(90, 90, 90);
-    padding-top: 10px;
- }
-
- .tablebackground{
-    background-color: #BAD2DE !important;
-  }
-
-
- .viewbackground{
-  background-color: #CBE2DA !important;
-}
-  
-
-.mvbackground{
-  background-color: #E5F0EC !important;
+  float: left;
+  width: 33.33%;
 }
 
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
-  .smallheader{
-      font-size: small !important;
-  }
+.kpi.number {
+  font-size: 2rem;
+  text-align: center;
+  color: rgb(90, 90, 90);
+}
 
-  #my-container {
-    height: 100vh;
-    width: 100%;
-  }
+.kpi.text {
+  font-size: 1rem;
+  text-align: center;
+  color: rgb(90, 90, 90);
+  padding-top: 10px;
+}
+
+.tablebackground {
+  background-color: #dedcba !important;
+}
+
+.viewbackground {
+  background-color: #e2cbe2 !important;
+}
+
+.mvbackground {
+  background-color: #ceece5 !important;
+}
+
+.smallheader {
+  font-size: small !important;
+}
+
+#my-container {
+  height: 100vh;
+  width: 100%;
+}

@@ -106,8 +106,9 @@ def table_cards(df, view_details):
 
 # using dayfirst is not efficient, build process to fix data at csv source
 def main():
-    # st.title("MetaFlake View")
-    st.markdown("<h1 style='text-align: center; '>MetaFlake View</h1>", unsafe_allow_html=True)
+    
+    # st.title(":rainbow[MetaFlake View]")
+    st.markdown("<h1>MetaFlake View</h1>", unsafe_allow_html=True)
 
     css()
     # Fetch data from Snowflake
