@@ -4,6 +4,16 @@ import streamlit as st
 def sidebar(df):
 
     df_reset = df
+    st.markdown("""
+<style>
+    [data-testid=stSidebar] {
+        background-color: #14665e91;
+    }
+    [data-testid=stSidebarUserContent] {
+        padding-top: 2rem;
+    }
+</style>
+""", unsafe_allow_html=True)
     
     cb_view_details = st.sidebar.toggle('Enable Details', help='When this toggle is on it shows more details of table objects')
 
@@ -63,6 +73,13 @@ def sidebar(df):
 
     # Table Type
     fv_table_type = df['TABLE_TYPE'].drop_duplicates()
+    st.markdown("""
+<style>
+    [data-testid=stSidebar] {
+        background-color: #14665e91;
+    }
+</style>
+""", unsafe_allow_html=True)
     selectbox_table_type = st.sidebar.multiselect(
         'Table Type', fv_table_type, fv_table_type, key=st.session_state.selectbox_table_type_key)
 
@@ -85,10 +102,10 @@ def sidebar(df):
     elif max_data_mb>1000000000000:
         step_size=10000      
 
-    data_size = st.sidebar.slider(
-        'Data Size (MB)', 0, max_data_mb+1, (0, max_data_mb+1), key=st.session_state.selectbox_data_size_key, step=step_size)
-    df = df.loc[(df['BYTES'] >= data_size[0]*1048576) &
-                (df['BYTES'] <= data_size[1]*1048576)]
+    # data_size = st.sidebar.slider(
+    #     'Data Size (MB)', 0, max_data_mb+1, (0, max_data_mb+1), key=st.session_state.selectbox_data_size_key, step=step_size)
+    # df = df.loc[(df['BYTES'] >= data_size[0]*1048576) &
+    #             (df['BYTES'] <= data_size[1]*1048576)]
 
     # rows selection
     max_rows = int(df['ROW_COUNT'].max())
@@ -101,10 +118,10 @@ def sidebar(df):
     elif max_rows>1000000000000:
         step_size=10000    
 
-    data_rows = st.sidebar.slider('Number of Rows', 0, max_rows+1,
-                                (0, max_rows+1), key=st.session_state.selectbox_max_rows_key, step=step_size)
-    df = df.loc[(df['ROW_COUNT'] >= data_rows[0]) &
-                (df['ROW_COUNT'] <= data_rows[1])]
+    # data_rows = st.sidebar.slider('Number of Rows', 0, max_rows+1,
+    #                             (0, max_rows+1), key=st.session_state.selectbox_max_rows_key, step=step_size)
+    # df = df.loc[(df['ROW_COUNT'] >= data_rows[0]) &
+    #             (df['ROW_COUNT'] <= data_rows[1])]
 
 
     def reset_button():

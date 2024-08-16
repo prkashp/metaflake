@@ -25,7 +25,7 @@ def table_cards(df, view_details):
         <div class="grey statistic">
             <div class="value">"""+str(df[df['TABLE_TYPE'] == 'BASE TABLE']['TABLE_ID'].count())+"""
             </div>
-            <div class="label">
+            <div style='color:grey;' class="label" >
                 Tables
             </div>
         </div>
