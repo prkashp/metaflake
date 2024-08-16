@@ -8,7 +8,7 @@ from sidebar import sidebar
 
 REMOTE_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
 # SQL query path
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="metaflake", layout="wide", page_icon="./app/data/happy.png")
 
 def css():
     st.markdown(f'<link href="{REMOTE_CSS_URL}" rel="stylesheet">', unsafe_allow_html=True)
