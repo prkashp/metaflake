@@ -55,6 +55,23 @@ def header_bg(table_type):
         return "mvbackground"
 
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
-    # Example preprocessing
-    df['processed_column'] = df['original_column'].apply(lambda x: x * 2)
-    return df
+    """
+    This function returns different series after appending an element "All"
+    """
+    # adding Select all option 
+    select_all = pd.Series(["All"], index=[9999999]) # Why 9.9 Mil? as it way beyoud number of tables exists across db
+
+    # Database filter view
+    col_db = df["TABLE_CATALOG"].drop_duplicates()
+    col_db = col_db._append(select_all, ignore_index=False)
+    #return col_db
+
+    col_schema = df["TABLE_SCHEMA"].drop_duplicates()
+    col_schema = col_schema._append(select_all, ignore_index=False)
+
+    col_owner = df["TABLE_OWNER"].drop_duplicates()
+    col_owner = col_owner._append(select_all, ignore_index=False)
+
+    col_table_type = df["TABLE_TYPE"].drop_duplicates()
+
+    return col_db, col_schema, col_owner, col_table_type

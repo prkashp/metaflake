@@ -9,6 +9,15 @@ h1 {
   border-bottom: 2rem;
 }
 
+.stSidebar {
+  background-color: #14665e91 !important;
+}
+
+.stSidebarUserContent {
+  padding-top: 2rem;
+  background-color: #c7c53cd3;
+}
+
 .column {
   float: left;
   width: 33.33%;

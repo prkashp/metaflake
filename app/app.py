@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from snowflake_connector import fetch_data
 from processor import *
-from sidebar import sidebar
+# from app.sidebar_obsolete import sidebar
 
 REMOTE_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
 # SQL query path
@@ -104,6 +104,115 @@ def table_cards(df, view_details):
 
     st.markdown(table_scorecard, unsafe_allow_html=True)
 
+def sidebar_v2(df):
+    df_reset = df
+
+    st.markdown("""
+<style>
+    [data-testid=stSidebar] {
+        background-color: #14665e91;
+    }
+    [data-testid=stSidebarUserContent] {
+        padding-top: 2rem;
+    }
+</style>
+""", unsafe_allow_html=True)
+    
+    #session state 
+    if "selectbox_db_key" not in st.session_state:
+        st.session_state["selectbox_db_key"] = 1
+        st.session_state["selectbox_schema_key"] = 2
+        st.session_state["selectbox_owner_key"] = 3
+        st.session_state["selectbox_table_type_key"] = 4
+        
+    def reset_button():
+        st.session_state["selectbox_db_key"] += st.session_state["selectbox_db_key"] 
+        st.session_state["selectbox_schema_key"] += st.session_state["selectbox_schema_key"]
+        st.session_state["selectbox_owner_key"] += st.session_state["selectbox_owner_key"]
+        st.session_state["selectbox_table_type_key"] += st.session_state["selectbox_table_type_key"]
+
+    # Toggle for more details on cards
+    render_more_details = st.sidebar.toggle("Enable Details", help='When this toggle is on it shows more details of table objects')
+    expanded_view = "" if render_more_details else """style="display: none;" """
+
+    # Order by the table cards
+    order_by = st.sidebar.selectbox("Order By", ('A → Z', 'Z → A', 'Data Size ↓', 'Data Size ↑',
+                                            'Rows ↓', 'Rows ↑', 'Date Created ↓', 'Date Created ↑', 'Date Altered ↓', 'Date Altered ↑'))
+    # order by cases
+    col_order_dict = {
+        "A → Z" : {
+            "col" : "TABLE_NAME",
+            "asc" : True
+        },
+        "Z → A" : {
+            "col" : "TABLE_NAME",
+            "asc" : False
+        },
+        "Data Size ↓" : {
+            "col" : "BYTES",
+            "asc" : False
+        },
+        "Data Size ↑" : {
+            "col" : "BYTES",
+            "asc" : True
+        },
+        "Rows ↓" : {
+            "col" : "ROW_COUNT",
+            "asc" : False
+        },
+        "Rows ↑" : {
+            "col" : "ROW_COUNT",
+            "asc" : True
+        },
+        "Date Created ↓" : {
+            "col" : "CREATED",
+            "asc" : False
+        },
+        "Date Created ↑" : {
+            "col" : "CREATED",
+            "asc" : True
+        },
+        "Date Altered ↓" : {
+            "col" : "LAST_ALTERED",
+            "asc" : False
+        },
+        "Date Altered ↑" : {
+            "col" : "LAST_ALTERED",
+            "asc" : True
+        }
+    }
+    df.sort_values(by=[col_order_dict[order_by].get("col")], inplace=True, ascending=col_order_dict[order_by].get("asc"))
+    
+    # Get processed data
+    col_db, col_schema, col_owner, col_table_type = preprocess_data(df)
+
+    # Filter table cards
+    selectbox_db = st.sidebar.selectbox("Database", col_db, index=len(col_db)-1, key=st.session_state["selectbox_db_key"])
+    df = df.loc[df["TABLE_CATALOG"].isin(col_db)] if selectbox_db == "All" else df.loc[df["TABLE_CATALOG"]==selectbox_db]
+
+    selectbox_schema = st.sidebar.selectbox("Schema", col_schema, index=len(col_schema)-1, key=st.session_state["selectbox_schema_key"])
+    df = df.loc[df["TABLE_SCHEMA"].isin(col_schema)] if selectbox_schema == "All" else df.loc[df["TABLE_SCHEMA"]==selectbox_schema]
+
+    selectbox_owner = st.sidebar.selectbox("Owner", col_owner, index=len(col_owner)-1, key=st.session_state["selectbox_owner_key"])
+    df = df.loc[df["TABLE_OWNER"].isin(col_owner)] if selectbox_owner == "All" else df.loc[df["TABLE_OWNER"]==selectbox_owner]
+
+    st.markdown("""
+<style>
+    span[data-baseweb="tag"] {
+        background-color: #c7c53cd3;
+    }
+</style>
+""", unsafe_allow_html=True)
+    
+    selectbox_type = st.sidebar.multiselect("Type", col_table_type, col_table_type, key=st.session_state["selectbox_table_type_key"])
+    df = df.loc[df["TABLE_TYPE"].isin(col_table_type)] if len(selectbox_type) <= 0 else df.loc[df["TABLE_TYPE"].isin(selectbox_type)]
+
+    # Reset filter button
+    reset = st.sidebar.button(label="Clear Selection", on_click=reset_button)
+    df = df_reset if reset else df
+
+    return df, expanded_view
+
 # using dayfirst is not efficient, build process to fix data at csv source
 def main():
     
@@ -120,7 +229,7 @@ def main():
 
     df = pd.read_csv('./app/data/metadata.csv') if not data else data
 
-    df_final, view_details = sidebar(df)
+    df_final, view_details = sidebar_v2(df)
 
     table_cards(df_final, view_details)
     

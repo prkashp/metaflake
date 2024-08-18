@@ -76,7 +76,7 @@ def sidebar(df):
     st.markdown("""
 <style>
     [data-testid=stSidebar] {
-        background-color: #14665e91;
+        background-color: #f2ef4fd3;
     }
 </style>
 """, unsafe_allow_html=True)
