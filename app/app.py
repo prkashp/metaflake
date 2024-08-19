@@ -213,6 +213,10 @@ def sidebar_v2(df):
 
     return df, expanded_view
 
+def search():
+    # https://blog.streamlit.io/create-a-search-engine-with-streamlit-and-google-sheets/
+    pass
+
 # using dayfirst is not efficient, build process to fix data at csv source
 def main():
     
