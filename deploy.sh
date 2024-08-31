@@ -18,8 +18,8 @@ ssh -i "$KEY_FILE" "$USER@$INSTANCE_IP" << 'EOF'
   sudo systemctl enable docker
 
   # Pull and run Docker container
-  docker pull your-dockerhub-username/your-image-name  # Replace with your Docker image
-  docker run -d -p 80:80 -p 443:443 your-dockerhub-username/your-image-name
+  docker build . -t metaflake/py-docker
+  docker run -p 8501:8501 metaflake/py-docker
 
   # Install Nginx for SSL termination (optional)
   sudo amazon-linux-extras install nginx1 -y
@@ -34,7 +34,7 @@ ssh -i "$KEY_FILE" "$USER@$INSTANCE_IP" << 'EOF'
   echo '
   server {
       listen 443 ssl;
-      server_name your-internal-domain.local;  # Replace with your internal domain
+      server_name your-internal-domain.local;  # TODO: Replace with your internal domain
 
       ssl_certificate /etc/nginx/ssl/nginx.crt;
       ssl_certificate_key /etc/nginx/ssl/nginx.key;

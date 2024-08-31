@@ -25,7 +25,7 @@ Parameters:
   InternalCIDR:
     Description: CIDR block of the internal network to allow access
     Type: String
-    Default: 10.0.0.0/24 # Adjust this CIDR block to match your internal network
+    Default: 10.0.0.0/24 # Imp: Adjust this CIDR block to match your internal network
 
 Resources:
   WebAppInstance:
@@ -33,7 +33,7 @@ Resources:
     Properties:
       InstanceType: !Ref InstanceType
       KeyName: !Ref KeyName
-      ImageId: ami-0abcdef1234567890 # Replace with the appropriate AMI ID for Amazon Linux 2 or Ubuntu
+      ImageId: ami-0abcdef1234567890 # Img: Replace with the appropriate AMI ID for Amazon Linux 2 or Ubuntu
       NetworkInterfaces:
         - AssociatePublicIpAddress: false
           SubnetId: !Ref PrivateSubnetID
