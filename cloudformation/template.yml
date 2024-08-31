@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Deploy a lightweight web application on EC2 t3.micro within a private subnet.
+
+Parameters:
+  KeyName:
+    Description: EC2 Key Pair for SSH access
+    Type: AWS::EC2::KeyPair::KeyName
+
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t3.micro
+    ConstraintDescription: Must be a valid EC2 instance type.
+
+  VPCID:
+    Description: The VPC ID where the instance will be deployed
+    Type: AWS::EC2::VPC::Id
+
+  PrivateSubnetID:
+    Description: The private subnet ID where the instance will be deployed
+    Type: AWS::EC2::Subnet::Id
+
+  InternalCIDR:
+    Description: CIDR block of the internal network to allow access
+    Type: String
+    Default: 10.0.0.0/24 # Adjust this CIDR block to match your internal network
+
+Resources:
+  WebAppInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      ImageId: ami-0abcdef1234567890 # Replace with the appropriate AMI ID for Amazon Linux 2 or Ubuntu
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: false
+          SubnetId: !Ref PrivateSubnetID
+          DeviceIndex: "0"
+          GroupSet:
+            - !Ref WebAppSecurityGroup
+
+  WebAppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP and HTTPS traffic from internal network only
+      VpcId: !Ref VPCID
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: !Ref InternalCIDR
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: !Ref InternalCIDR
+
+Outputs:
+  InstanceID:
+    Description: Instance ID
+    Value: !Ref WebAppInstance
