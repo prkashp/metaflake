@@ -104,6 +104,7 @@ def table_cards(df, view_details):
 
     st.markdown(table_scorecard, unsafe_allow_html=True)
 
+@st.cache_data
 def sidebar_v2(df):
     df_reset = df
 
