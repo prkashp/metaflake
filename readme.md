@@ -1,6 +1,7 @@
 # MetaFlake
 
-![Uploading Screenshot 2024-09-17 at 19-07-09 metaflake.png…]()
+![Screenshot 2024-09-17 at 19-07-09 metaflake](https://github.com/user-attachments/assets/d8bb3029-ae41-4c7d-ae9c-201af6849706)
+
 
 ## Build the Docker image:
 
