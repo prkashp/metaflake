@@ -2,6 +2,10 @@
 
 ![Screenshot 2024-09-17 at 19-07-09 metaflake](https://github.com/user-attachments/assets/d8bb3029-ae41-4c7d-ae9c-201af6849706)
 
+## Clone it in local
+```bash
+git clone https://github.com/prkashp/metaflake.git
+```
 
 ## Run Streamlit App locally:
 
