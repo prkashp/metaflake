@@ -3,16 +3,11 @@
 ![Screenshot 2024-09-17 at 19-07-09 metaflake](https://github.com/user-attachments/assets/d8bb3029-ae41-4c7d-ae9c-201af6849706)
 
 
-## Build the Docker image:
+## Run Streamlit App locally:
 
+Open terminal run local.sh
 ```bash
-docker build . -t metaflake/py-docker
-```
-
-## Run the Docker container:
-
-```bash
-docker run -p 8501:8501 metaflake/py-docker
+bash local.sh
 ```
 
 ## Access the Streamlit app:
