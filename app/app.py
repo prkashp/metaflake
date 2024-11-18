@@ -32,14 +32,14 @@ def table_cards(df, view_details):
         <div class="grey statistic">
             <div class="value">"""+str(df[df['TABLE_TYPE'] == 'VIEW']['TABLE_ID'].count())+"""
             </div>
-            <div class="label">
+            <div style='color:grey;' class="label" >
                 Views
             </div>
         </div>
         <div class="grey statistic">
             <div class="value">"""+str(df[df['TABLE_TYPE'] == 'MATERIALIZED VIEW']['TABLE_ID'].count())+"""
             </div>
-            <div class="label">
+            <div style='color:grey;' class="label" >
                 Materialized Views
             </div>
         </div>
@@ -47,7 +47,7 @@ def table_cards(df, view_details):
             <div class="value">
                 """+human_format(df['ROW_COUNT'].sum())+"""
             </div>
-            <div class="label">
+            <div style='color:grey;' class="label" >
                 Rows
             </div>
         </div>
@@ -55,7 +55,7 @@ def table_cards(df, view_details):
             <div class="value">
                 """+human_bytes(df['BYTES'].sum())+" "+human_bytes_text(df['BYTES'].sum())+"""
             </div>
-            <div class="label">
+            <div style='color:grey;' class="label" >
                 Size
             </div>
         </div>
@@ -104,7 +104,7 @@ def table_cards(df, view_details):
 
     st.markdown(table_scorecard, unsafe_allow_html=True)
 
-@st.cache_data
+# @st.cache_resource
 def sidebar_v2(df):
     df_reset = df
 
